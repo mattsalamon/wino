@@ -68,14 +68,13 @@ class ViewController: UIViewController {
         // creates persistent object and key
         NSUserDefaults.standardUserDefaults().setObject(buttonDate, forKey: "buttonDate")
         
-        
-            
-            // creates persistent object and key
-            NSUserDefaults.standardUserDefaults().setInteger(total, forKey: "total")
-        
-            persTotal = Int(NSUserDefaults.standardUserDefaults().objectForKey("total")! as! NSNumber) + 1
-        
-            print(persTotal)
+        // creates persistent object and key
+        persTotal = NSUserDefaults.standardUserDefaults().integerForKey("total")
+        //Add 1 to existing variable and save it again
+        NSUserDefaults.standardUserDefaults().setInteger(total+1, forKey: "total")
+
+        persTotal = NSUserDefaults.standardUserDefaults().integerForKey("total")
+        print(persTotal)
         
         bottleEmpty(false)
         
@@ -86,6 +85,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Retrieve from Persistent store and verify value
+        persTotal = NSUserDefaults.standardUserDefaults().integerForKey("total")
         print(persTotal)
         
         let currentDate = NSDate()
