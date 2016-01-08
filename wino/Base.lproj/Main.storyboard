@@ -26,7 +26,7 @@
                                     <action selector="button:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wjo-mV-P9W"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfq-0m-W43">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfq-0m-W43">
                                 <rect key="frame" x="0.0" y="104" width="375" height="47"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.68257774594464515" green="0.68358242107510236" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
@@ -171,6 +171,14 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fB-b4-vYs">
+                                <rect key="frame" x="0.0" y="618" width="375" height="33"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.67311593444811124" green="0.66788289867783868" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" Total Bottles So Far" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnB-mx-JjH">
                                 <rect key="frame" x="0.0" y="180" width="164" height="31"/>
                                 <animations/>
@@ -187,6 +195,7 @@
                     <connections>
                         <outlet property="button" destination="U59-gd-FvT" id="bH4-xQ-vqn"/>
                         <outlet property="dayLabel" destination="pfq-0m-W43" id="x7N-u2-YG3"/>
+                        <outlet property="lastOpenLabel" destination="8fB-b4-vYs" id="ehD-me-gOP"/>
                         <outlet property="totalLabel" destination="hnB-mx-JjH" id="290-js-j8i"/>
                         <outlet property="totalNumLabel" destination="Olq-Y8-A1Q" id="Du6-9R-sGo"/>
                         <outlet property="wine1" destination="bwg-Ve-H5a" id="bec-MV-TMw"/>

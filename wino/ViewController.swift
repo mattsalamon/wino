@@ -22,7 +22,6 @@ class ViewController: UIViewController {
     
     var persTotal = 0
     
-   
     
     @IBOutlet var dayLabel: UILabel!
     
@@ -61,21 +60,18 @@ class ViewController: UIViewController {
     @IBOutlet var totalNumLabel: UILabel!
     
     
+    @IBOutlet var lastOpenLabel: UILabel!
+    
+
     @IBAction func button(sender: AnyObject) {
+        
         
         buttonDate = NSDate()
         
         // creates persistent object and key
         NSUserDefaults.standardUserDefaults().setObject(buttonDate, forKey: "buttonDate")
         
-        
-            
-            // creates persistent object and key
-            NSUserDefaults.standardUserDefaults().setInteger(total, forKey: "total")
-        
-            persTotal = Int(NSUserDefaults.standardUserDefaults().objectForKey("total")! as! NSNumber) + 1
-        
-            print(persTotal)
+        addBottle()
         
         bottleEmpty(false)
         
@@ -86,7 +82,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(persTotal)
+        //use this to remove persistent data store (for testing)
+        // NSUserDefaults.standardUserDefaults().removeObjectForKey("total")
+        
+        // NSUserDefaults.standardUserDefaults().removeObjectForKey("buttonDate")
         
         let currentDate = NSDate()
         
@@ -98,7 +97,7 @@ class ViewController: UIViewController {
         
         if (NSUserDefaults.standardUserDefaults().objectForKey("buttonDate") != nil) {
             
-            //gets persistenat object from key that we give
+            //gets persistent object from key that we give
             persButtonDate = NSUserDefaults.standardUserDefaults().objectForKey("buttonDate")! as! NSDate
             
           let goodPersButtonDate = persButtonDate! as! NSDate
@@ -107,90 +106,95 @@ class ViewController: UIViewController {
             
             print(hardDiff)
             
-            if (hardDiff >= 0 && hardDiff <= 70)  {
+            if (hardDiff >= 0 && hardDiff <= 604800)  {
                 
                 button.hidden = true
                 
-                if (hardDiff >= 70) {
+                if (hardDiff >= 604800) {
                     wine1.hidden = true
                     eraseLabels()
-    
+                    
                 }
-                if hardDiff >= 50 {
+                if hardDiff >= 518400 {
                     wine2.hidden = true
-                      
+                    
                 }
-                if hardDiff >= 40 {
+                if hardDiff >= 432000 {
                     wine3.hidden = true
-                            
+                    
                 }
-                if hardDiff >= 30 {
+                if hardDiff >= 345600 {
                     wine4.hidden = true
-                             
+                    
                 }
-                if hardDiff >= 20 {
+                if hardDiff >= 259200 {
                     wine5.hidden = true
-                                   
+                    
                 }
-                if hardDiff >= 10 {
+                if hardDiff >= 172800 {
                     wine6.hidden = true
-                                       
+                    
                 }
-                if hardDiff >= 5 {
+                if hardDiff >=  86400{
                     wine7.hidden = true
-                                          
+                    
                 }
-                                        
-                if hardDiff >= 1 && hardDiff <= 5 {
+                
+                if hardDiff >= 1 && hardDiff <= 86400 {
                     
                     eraseLabels()
                     wineLabel7.hidden = false
                 }
                 
-                if hardDiff >= 6 && hardDiff < 10 {
+                if hardDiff >= 86400 && hardDiff < 172800 {
                     
                     eraseLabels()
                     wineLabel6.hidden = false
                 }
                 
-                if hardDiff >= 10 && hardDiff < 20 {
+                if hardDiff >= 172800 && hardDiff < 259200 {
                     
                     eraseLabels()
                     wineLabel5.hidden = false
                 }
                 
-                if hardDiff >= 20 && hardDiff < 30 {
+                if hardDiff >= 259200 && hardDiff < 345600 {
                     
                     eraseLabels()
                     wineLabel4.hidden = false
                 }
                 
-                if hardDiff >= 30 && hardDiff < 40 {
+                if hardDiff >= 345600 && hardDiff < 432000 {
                     
                     eraseLabels()
                     wineLabel3.hidden = false
                 }
                 
-                if hardDiff >= 40 && hardDiff < 50 {
+                if hardDiff >= 432000 && hardDiff < 518400 {
                     
                     eraseLabels()
                     wineLabel2.hidden = false
                 }
                 
-                if hardDiff >= 50 && hardDiff < 70 {
+                if hardDiff >= 518400 && hardDiff < 604800 {
                     
                     eraseLabels()
                     wineLabel1.hidden = false
                 }
-                
             
                 let components: NSCalendarUnit = [.Day, .Hour, .Minute, .Second]
             
                 let diff = userCalendar.components(components, fromDate: goodPersButtonDate, toDate: currentDate, options: [])
             
-                print(persButtonDate)
+                print(goodPersButtonDate)
+                
+                let formatter = NSDateFormatter()
+                formatter.dateStyle = .LongStyle
+                formatter.timeStyle = .ShortStyle
+                print(formatter.stringFromDate(goodPersButtonDate))
             
-           
+                lastOpenLabel.text = "Bottle Opened \(formatter.stringFromDate(goodPersButtonDate))"
+                
                 dayLabel.text = "\(String(6 - diff.day)) Days, \(String(23 - diff.hour)) Hours, \(String(59 - diff.minute)) Mins, \(String(59 - diff.second)) Secs"
             }
                 
@@ -199,12 +203,25 @@ class ViewController: UIViewController {
             }
         }
         
+        // bottleEmpty(true)
+        
         
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.se
+    }
+    
+    func addBottle() {
+        
+        // creates persistent object and key
+        persTotal =  NSUserDefaults.standardUserDefaults().integerForKey("total")
+        
+        NSUserDefaults.standardUserDefaults().setInteger(persTotal + 1, forKey: "total")
+        
+        persTotal =  NSUserDefaults.standardUserDefaults().integerForKey("total")
+        
     }
 
     func bottleEmpty(arg: Bool) {
@@ -217,7 +234,7 @@ class ViewController: UIViewController {
         wine1.hidden = arg
         
         if arg {
-            dayLabel.text = "TIME'S UP - TIME TO DRINK AGAIN!"
+            dayLabel.text = "TIME TO OPEN A NEW BOTTLE!"
         
             button.hidden = false
             
@@ -249,29 +266,60 @@ class ViewController: UIViewController {
         wineLabel2.hidden = true
         wineLabel1.hidden = true
         
-        
     }
     
     func animateDayLabel() {
         
-       dayLabel.hidden = false
+        persTotal = NSUserDefaults.standardUserDefaults().integerForKey("total")
         
-        UIView.animateWithDuration(0.5, delay: 0.7, options: [], animations: {
+        totalNumLabel.text = "\(persTotal)"
+        
+       
+        if (NSUserDefaults.standardUserDefaults().objectForKey("buttonDate") != nil) {
+        //gets persistent object from key that we give
+        persButtonDate = NSUserDefaults.standardUserDefaults().objectForKey("buttonDate")! as! NSDate
+        
+        let goodPersButtonDate = persButtonDate! as! NSDate
+        
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .LongStyle
+        formatter.timeStyle = .ShortStyle
+        print(formatter.stringFromDate(goodPersButtonDate))
+        
+        lastOpenLabel.text = "Bottle Opened \(formatter.stringFromDate(goodPersButtonDate))"
+        }
+        
+        // if no button Date has ever been created--ie first time the app is loaded
+        else {
+            lastOpenLabel.text = "Let's Get Started!"
+            eraseLabels()
+            wineLabel7.hidden = false
+            dayLabel.text = "Start Your First Bottle Bitch!"
+        }
+        
+        
+        UIView.animateWithDuration(1.5, animations: {
             
             self.dayLabel.center.x += self.view.bounds.width
             
-        }, completion: nil)
+        })
         
         
-        UIView.animateWithDuration(0.5, delay: 1.0, options: [], animations: {
+        UIView.animateWithDuration(0.5, delay: 1.4, options: [], animations: {
             
             self.totalLabel.center.x += self.view.bounds.width
             
         }, completion: nil)
         
-        UIView.animateWithDuration(0.5, delay: 1.9, options: [], animations: {
+        UIView.animateWithDuration(0.5, delay: 2.1, options: [], animations: {
             
             self.totalNumLabel.center.x -= self.view.bounds.width
+            
+            }, completion: nil)
+        
+        UIView.animateWithDuration(0.5, delay: 2.8, options: [], animations: {
+            
+            self.lastOpenLabel.center.x -= self.view.bounds.width
             
             }, completion: nil)
     }
